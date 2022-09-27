@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Cart from '../Cart/Cart';
 import MealItem from '../MealsItem/MealItem';
 import './Meals.css';
 const Meals = () => {
@@ -8,9 +9,13 @@ const Meals = () => {
         fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=a`)
         .then((res)=> res.json())
         .then(data => setMeals(data.meals));
-    },[])
+    },[]);
+    const handalDelete = (id) =>{
+      const updateOrder = order.filter((product) => product.idMeal !== id);
+      setOrder(updateOrder);
+    }
     return (
-      <div className="meals-container container mx-auto my-8">
+      <div className="meals-container container mx-auto my-8 ">
         <div className="meals-items grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {meals.map((meal) => (
             <MealItem
@@ -21,11 +26,15 @@ const Meals = () => {
             ></MealItem>
           ))}
         </div>
-        <div className="cart-meals">
-          <h3>This is seleceted meals</h3>
-          {order?.map((item) => (
-            <li>{item.strMeal}</li>
-          ))}
+        <div className="cart-meals sticky top-0">
+          <h3 className="text-2xl text-center font-bold text-primary">
+            Ordered Food
+          </h3>
+          <div className="p-4">
+            {order?.map((item) => (
+              <Cart item={item} handalDelete={handalDelete}></Cart>
+            ))}
+          </div>
         </div>
       </div>
     );

@@ -4,16 +4,22 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import './MealItem.css';
 const MealItem = ({meal, order, setOrder}) => {
-    const { strMealThumb, strMeal, strInstructions } = meal;
-   const handalOrder = () => {
+    const { strMealThumb, strMeal, strInstructions, idMeal } = meal;
+    const handalOrder = () => {
     const info = {
       strMealThumb,
       strMeal,
       strInstructions,
+      idMeal,
+      price: 200
     };
     if(order){
-        const newOrder = [...order, info]
-        setOrder(newOrder);
+        setOrder([...order, info]);
+        return;
+    }
+    else{
+      setOrder([info]);
+      return;
     }
    }
     return (
@@ -27,6 +33,7 @@ const MealItem = ({meal, order, setOrder}) => {
           </figure>
           <div className="card-body">
             <h2 className="card-title">{strMeal}</h2>
+            <p>Product Id: {idMeal}</p>
             <p className="text-start">{strInstructions.slice(0, 60)}</p>
             <div className="card-actions justify-end">
               <button onClick={handalOrder} className="btn btn-primary">
