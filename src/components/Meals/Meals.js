@@ -32,7 +32,11 @@ const Meals = () => {
           </h3>
           <div className="p-4">
             {order?.map((item) => (
-              <Cart item={item} handalDelete={handalDelete}></Cart>
+              <Cart
+                item={item}
+                handalDelete={handalDelete}
+                key={item.idMeal}
+              ></Cart>
             ))}
           </div>
         </div>
